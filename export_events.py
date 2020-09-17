@@ -97,8 +97,11 @@ def updateEvents():
       e1 = loadEvents(e1f)
       e2 = loadEvents(e2f)
       e3 = loadEvents(e3f)
-      for k in e2: k['s'] = int(k['s']) # int convert
-
+      for k in e2:
+        try: 
+          k['s'] = int(k['s']) # int convert
+        except Exception:
+          print 'Error on %s' % k
       e4 = ''
       if os.path.isfile(e4f):
         e4 = open(e4f, 'r').read()
