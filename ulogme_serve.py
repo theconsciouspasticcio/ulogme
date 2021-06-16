@@ -15,9 +15,9 @@ else:
   PORT = 8124
 
 # serve render/ folder, not current folder
-rootdir = os.getcwd()
-os.chdir('render')
-
+file_path = os.path.realpath(__file__)
+rootdir = os.path.dirname(file_path)
+os.chdir(rootdir + '/render')
 # Custom handler
 class CustomHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
   def do_GET(self):
