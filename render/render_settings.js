@@ -14,11 +14,11 @@ var title_mappings = [
   { pattern: /\/lab/, mapto: 'INotebook' },
   { pattern: /colab.research.google/, mapto: 'INotebook' },
   { pattern: /.pdf/, mapto: 'Papers' },
+  { pattern: /Mendeley/, mapto: 'Papers' },
   { pattern: /Gmail/, mapto: 'Gmail' },
   { pattern: /Notion/, mapto: 'Notes' },
   { pattern: /edwardr@/, mapto: 'Terminal' },
   { pattern: /iTerm2/, mapto: 'Terminal' },
-  { pattern: /Microsoft Teams/, mapto: 'Meetings' },
   { pattern: /Code/, mapto: 'VSCode' },
   { pattern: /__LOCKEDSCREEN/, mapto: 'Locked Screen' }, // __LOCKEDSCREEN is a special token
   { pattern: /ScreenSaverEngine/, mapto: 'Locked Screen' },
@@ -26,9 +26,12 @@ var title_mappings = [
   { pattern: /TeXworks/, mapto: 'Latex' },
   { pattern: /pytorch/, mapto: 'Documentation' },
   { pattern: /localhost/, mapto: 'LocalHost' },
-  { pattern: /aml/, mapto: 'TensorBoard' },
+  { pattern: /aml./, mapto: 'TensorBoard' },
   { pattern: /atlassian/, mapto: 'Documentation' },
+  { pattern: /stack/, mapto: 'Documentation' },
+  { pattern: /search/, mapto: 'Documentation' },
   { pattern: /git/, mapto: 'Documentation' },
+  { pattern: /Teams/, mapto: 'Meetings' },
   { pattern: /JamBoard/, mapto: 'Meetings' },
   { pattern: /youtube/, mapto: 'Time Wasting' },
   { pattern: /ebay/, mapto: 'Time Wasting' },
@@ -59,8 +62,9 @@ function mapwin(w) {
 // These groups will be rendered together in the "barcode view". For example, I like
 // to group my work stuff and play stuff together.
 var display_groups = [];
-display_groups.push(["Gmail", "Google Chrome", "MISC", "SubText2"]); // internet related
-display_groups.push(["Matlab", "SubText2 Coding", "VSCode", "INotebook", "Terminal", "Papers", "Notes", "Documentation", "LocalHost", "TensorBoard"]); // work related
+// Non work related 
+display_groups.push(["Gmail", "Google Chrome", "MISC"]); // internet related
+display_groups.push(["Matlab", "Terminal", "Meetings", "VSCode", "INotebook", "Papers", "Notes", "Documentation", "LocalHost", "TensorBoard"]); // work related
 display_groups.push(["TeXworks"]); // paper writing related
 display_groups.push(["Locked Screen"]); // computer not being used 
 display_groups.push(["Time Wasting"])
@@ -70,7 +74,7 @@ display_groups.push(["Time Wasting"])
 // classify as hacking, and they break "streaks" (events of focused hacking)
 // the implementation is currently quite hacky, experimental and contains 
 // many magic numbers.
-var hacking_titles = ["INotebook", "Terminal", "Matlab", "SubText2 Coding", "VSCode"];
+var hacking_titles = ["INotebook", "Terminal", "Matlab", "VSCode", "Documentation"];
 var draw_hacking = true; // by default turning this off
 
 // draw notes row?

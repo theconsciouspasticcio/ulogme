@@ -1,4 +1,4 @@
-render/events_*json
+render/event_jsons
 .env
 logs
 *.swp
