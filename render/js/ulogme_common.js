@@ -4,49 +4,64 @@
 // builds a dictionary of string -> color, in HSL format
 function colorHashStrings(arr) {
   var color_hash = {};
-  for(var i=0,N=arr.length;i<N;i++) {
+  // If arr shorter than 10 use d3 category10
+  // if greater than 10 use d3 category20
+  if (arr.length < 10) {
+    var color_scale = d3.scale.category10();
+  } else {
+    var color_scale = d3.scale.category20();
+  }
+
+  // If color scale is not defined, use HSL
+  arr.sort();
+  for (var i = 0, N = arr.length; i < N; i++) {
     var title = arr[i];
-    color_hash[title] = "hsl(" + Math.floor((i+0.5)/N * 360) + ",100%,60%)";
+
+    if (color_scale == undefined) {
+      color_hash[title] =
+        "hsl(" + Math.floor(((i + 0.5) / N) * 360) + ",100%,60%)";
+    } else {
+      color_hash[title] = color_scale(i);
+    }
   }
   return color_hash;
 }
 
 // utility that looks at the URL of current page and sets QueryString
-var QueryString = function () {
+var QueryString = (function () {
   var query_string = {};
   var query = window.location.search.substring(1);
   var vars = query.split("&");
-  for (var i=0;i<vars.length;i++) {
+  for (var i = 0; i < vars.length; i++) {
     var pair = vars[i].split("=");
-      // If first entry with this name
+    // If first entry with this name
     if (typeof query_string[pair[0]] === "undefined") {
       query_string[pair[0]] = pair[1];
       // If second entry with this name
     } else if (typeof query_string[pair[0]] === "string") {
-      var arr = [ query_string[pair[0]], pair[1] ];
+      var arr = [query_string[pair[0]], pair[1]];
       query_string[pair[0]] = arr;
       // If third or later entry with this name
     } else {
       query_string[pair[0]].push(pair[1]);
     }
-  } 
-    return query_string;
-}();
+  }
+  return query_string;
+})();
 
 // Javascript promises utilites. I like promises <3
 function get(url) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     var req = new XMLHttpRequest();
-    req.open('GET', url);
-    req.onload = function() {
+    req.open("GET", url);
+    req.onload = function () {
       if (req.status == 200) {
         resolve(req.response);
-      }
-      else {
+      } else {
         reject(Error(req.statusText));
       }
     };
-    req.onerror = function() {
+    req.onerror = function () {
       reject(Error("Network Error"));
     };
     req.send();
@@ -55,10 +70,12 @@ function get(url) {
 
 function getJSON(url) {
   // get returns a Promise
-  return get(url).then(JSON.parse).catch(function(err) {
-    console.log("getJSON failed for", url, err);
-    throw err;
-  });
+  return get(url)
+    .then(JSON.parse)
+    .catch(function (err) {
+      console.log("getJSON failed for", url, err);
+      throw err;
+    });
 }
 
 function getJSON_CACHEHACK(url) {
@@ -66,11 +83,13 @@ function getJSON_CACHEHACK(url) {
   // it has been updated. Appending a random number is a hacky
   // way of preventing this caching and ensures that the newest
   // version is retrieved
-  var hackurl = url + '?sigh=' + Math.floor(100000*Math.random());
-  return get(hackurl).then(JSON.parse).catch(function(err) {
-    console.log("getJSON failed for", url, err);
-    throw err;
-  });
+  var hackurl = url + "?sigh=" + Math.floor(100000 * Math.random());
+  return get(hackurl)
+    .then(JSON.parse)
+    .catch(function (err) {
+      console.log("getJSON failed for", url, err);
+      throw err;
+    });
 }
 
 // takes window and key events (ew and ek) and assigns key events
@@ -82,29 +101,33 @@ function computeKeyStats(ew, ek) {
   var j = 0;
   var ewn = ew.length;
   var ekn = ek.length;
-  var cur_window = '';
-  
+  var cur_window = "";
+
   // merge sort, basically
-  while(i<ewn && j<ekn) {
+  while (i < ewn && j < ekn) {
     var popw; // pop window event?
-    if(i>=ewn) { popw = false; }
-    else if(j>=ekn) { popw = true; }
-    else {
+    if (i >= ewn) {
+      popw = false;
+    } else if (j >= ekn) {
+      popw = true;
+    } else {
       var tw = ew[i].t;
       var tk = ek[j].t;
       popw = tw < tk;
     }
-    if(popw) { // process new window event
+    if (popw) {
+      // process new window event
       cur_window = ew[i].m;
       i++;
-    } else { // process key event
-      if(cur_window !== '') {
+    } else {
+      // process key event
+      if (cur_window !== "") {
         var fhere = ek[j].s;
-        if(key_stats.hasOwnProperty(cur_window)) {
+        if (key_stats.hasOwnProperty(cur_window)) {
           key_stats[cur_window].f += fhere;
-          key_stats[cur_window].n ++;
+          key_stats[cur_window].n++;
         } else {
-          key_stats[cur_window] = {'f':fhere, 'n':1};
+          key_stats[cur_window] = { f: fhere, n: 1 };
         }
       }
       j++;
@@ -113,11 +136,10 @@ function computeKeyStats(ew, ek) {
   return key_stats;
 }
 
-// same idea as computeKeyStats, but outputs "hacking" events, 
+// same idea as computeKeyStats, but outputs "hacking" events,
 // which are contiguous areas of high keystroke activity. That means
 // that the person is in hacking mode! :)
 function computeHackingStats(ew, ek, hacking_titles) {
-
   var hacking_stats = {};
   var hacking_events = [];
 
@@ -125,7 +147,7 @@ function computeHackingStats(ew, ek, hacking_titles) {
   var j = 0;
   var ewn = ew.length;
   var ekn = ek.length;
-  var cur_window = '';
+  var cur_window = "";
   var hacking_title = false;
   var hacking_counter = 0;
   var hacking_reset_counter = 0;
@@ -136,10 +158,11 @@ function computeHackingStats(ew, ek, hacking_titles) {
   var total_hacking_time = 0;
   var total_hacking_keys = 0;
 
-  var notHacking = function(t) { // helper function
+  var notHacking = function (t) {
+    // helper function
     hacking_reset_counter++;
-    if(hacking_reset_counter > 10) {
-      if(hacking_now) {
+    if (hacking_reset_counter > 10) {
+      if (hacking_now) {
         // we were hacking and now it ended. record the session
         var h = {};
         h.t0 = hacking_start;
@@ -158,53 +181,55 @@ function computeHackingStats(ew, ek, hacking_titles) {
       hacking_reset_counter = 0;
       hacking_f_accum = 0;
     }
-  }
+  };
 
   // a bit of code duplication here... :( hmmm
-  while(i<ewn && j<ekn) {
+  while (i < ewn && j < ekn) {
     var popw;
-    if(i>=ewn) { popw = false; }
-    else if(j>=ekn) { popw = true; }
-    else {
+    if (i >= ewn) {
+      popw = false;
+    } else if (j >= ekn) {
+      popw = true;
+    } else {
       var tw = ew[i].t;
       var tk = ek[j].t;
       popw = tw < tk;
     }
-    if(popw) { // process new window event
+    if (popw) {
+      // process new window event
       cur_window = ew[i].m;
       hacking_title = hacking_titles.indexOf(cur_window) > -1;
       i++;
     } else {
-
       // process key event
-      if(cur_window !== '') {
+      if (cur_window !== "") {
         var fhere = ek[j].s;
-        if(hacking_title) {
+        if (hacking_title) {
           // current active title is a hacking title. accumulate streak
           // magic numbers alert :)
-          if(fhere < 3) { 
+          if (fhere < 3) {
             // there are less than 3 keystrokes in last 9 seconds...
             hacking_reset_counter++;
-            if(hacking_reset_counter > 10) {
-              // way too much time has gone by with no key events. 
+            if (hacking_reset_counter > 10) {
+              // way too much time has gone by with no key events.
               // Person is sleeping. This aint hacking!
-              notHacking(tk); 
+              notHacking(tk);
             }
           } else {
             // there are more than 3 keystrokes in last 9 seconds
             hacking_reset_counter = Math.max(0, hacking_reset_counter - 1);
             hacking_counter += 1;
-            if(hacking_counter > 15) {
+            if (hacking_counter > 15) {
               // we've built up quite a bit of hacking_counter in this
               // session of relatively more than 3 keystrokes / 9 seconds
               // Lets consider ourselves hacking.
-              if(!hacking_now) {
+              if (!hacking_now) {
                 // we started hacking. record time
                 hacking_start = tk;
               }
               hacking_now = true;
             }
-            if(hacking_now) {
+            if (hacking_now) {
               hacking_f_accum += fhere;
             }
           }

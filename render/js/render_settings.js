@@ -8,29 +8,31 @@
 var title_mappings = [
   { pattern: /Google Chrome/, mapto: 'Google Chrome' },
   { pattern: /Firefox/, mapto: 'Google Chrome' }, // lol
-  { pattern: /MATLAB/, mapto: 'Matlab' },
-  { pattern: /Figure/, mapto: 'Matlab' },
-  { pattern: /Inotebook/, mapto: 'INotebook' },
-  { pattern: /\/lab/, mapto: 'INotebook' },
-  { pattern: /colab.research.google/, mapto: 'INotebook' },
+  { pattern: /Inotebook/, mapto: 'Coding' },
+  { pattern: /\/lab/, mapto: 'Coding' },
+  { pattern: /colab.research.google/, mapto: 'Coding' },
   { pattern: /.pdf/, mapto: 'Papers' },
   { pattern: /Mendeley/, mapto: 'Papers' },
-  { pattern: /Gmail/, mapto: 'Gmail' },
-  { pattern: /Notion/, mapto: 'Notes' },
-  { pattern: /edwardr@/, mapto: 'Terminal' },
-  { pattern: /iTerm2/, mapto: 'Terminal' },
-  { pattern: /Code/, mapto: 'VSCode' },
+  { pattern: /edwardr@/, mapto: 'Coding' },
+  { pattern: /iTerm2/, mapto: 'Coding' },
+  { pattern: /Code/, mapto: 'Coding' },
   { pattern: /__LOCKEDSCREEN/, mapto: 'Locked Screen' }, // __LOCKEDSCREEN is a special token
   { pattern: /ScreenSaverEngine/, mapto: 'Locked Screen' },
   { pattern: /loginwindow/, mapto: 'Locked Screen' },
   { pattern: /TeXworks/, mapto: 'Latex' },
-  { pattern: /pytorch/, mapto: 'Documentation' },
-  { pattern: /localhost/, mapto: 'LocalHost' },
-  { pattern: /aml./, mapto: 'TensorBoard' },
-  { pattern: /atlassian/, mapto: 'Documentation' },
-  { pattern: /stack/, mapto: 'Documentation' },
-  { pattern: /search/, mapto: 'Documentation' },
-  { pattern: /git/, mapto: 'Documentation' },
+  { pattern: /pytorch/, mapto: 'Other Work' },
+  { pattern: /localhost/, mapto: 'Other Work' },
+  { pattern: /aml./, mapto: 'Other Work' },
+  { pattern: /blog/, mapto: 'Learning' },
+  { pattern: /lesswrong/, mapto: 'Learning' },
+  { pattern: /matter/, mapto: 'Learning' },
+  { pattern: /anki/, mapto: 'Learning' },
+  { pattern: /obsidian/, mapto: 'Learning' },
+  { pattern: /atlassian/, mapto: 'Other Work' },
+  { pattern: /stack/, mapto: 'Other Work' },
+  { pattern: /scalars/, mapto: 'Other Work' },
+  { pattern: /search/, mapto: 'Other Work' },
+  { pattern: /git/, mapto: 'Other Work' },
   { pattern: /Teams/, mapto: 'Meetings' },
   { pattern: /JamBoard/, mapto: 'Meetings' },
   { pattern: /youtube/, mapto: 'Time Wasting' },
@@ -62,25 +64,26 @@ function mapwin(w) {
 // These groups will be rendered together in the "barcode view". For example, I like
 // to group my work stuff and play stuff together.
 var display_groups = [];
-// Non work related 
-display_groups.push(["Gmail", "Google Chrome", "MISC"]); // internet related
-display_groups.push(["Matlab", "Terminal", "Meetings", "VSCode", "INotebook", "Papers", "Notes", "Documentation", "LocalHost", "TensorBoard"]); // work related
+// Non work related
+display_groups.push(["Google Chrome", "MISC"]); // internet related
+display_groups.push(["Coding", "Papers", "Other Work"]); // work related
+display_groups.push(["Learning", "Development"]); // Personal development
 display_groups.push(["TeXworks"]); // paper writing related
-display_groups.push(["Locked Screen"]); // computer not being used 
+display_groups.push(["Locked Screen"]); // computer not being used
 display_groups.push(["Time Wasting"])
 // list of titles that classify as "hacking", or being productive in general
 // the main goal of the day is to get a lot of focused sessions of hacking
 // done throughout the day. Windows that arent in this list do not
 // classify as hacking, and they break "streaks" (events of focused hacking)
-// the implementation is currently quite hacky, experimental and contains 
+// the implementation is currently quite hacky, experimental and contains
 // many magic numbers.
-var hacking_titles = ["INotebook", "Terminal", "Matlab", "VSCode", "Documentation"];
+var hacking_titles = ["Coding"];
 var draw_hacking = true; // by default turning this off
 
 // draw notes row?
 var draw_notes = true;
 
 // experimental coffee levels indicator :)
-// looks for notes that mention coffee and shows 
+// looks for notes that mention coffee and shows
 // levels of coffee in body over time
 var draw_coffee = false;

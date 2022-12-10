@@ -26,7 +26,7 @@ var d3utils = {};
     if(title !== '') {
       div.append('p').attr('class', 'pietitle').text(title);
     }
-    
+
     var arc = d3.svg.arc()
       .outerRadius(r)
       .innerRadius(0);
@@ -52,12 +52,12 @@ var d3utils = {};
 
     g.append("text")
       .attr("fill", function(d) { return d.data.col; })
-      .attr("transform", function(d) { 
+      .attr("transform", function(d) {
         var c = arc.centroid(d);
         var x = c[0];
         var y = c[1];
         var h = Math.sqrt(x*x + y*y);
-        return "translate(" + (x/h * (r + textmargin)) +  ',' + (y/h * (r + textmargin)) +  ")"; 
+        return "translate(" + (x/h * (r + textmargin)) +  ',' + (y/h * (r + textmargin)) +  ")";
       })
       .attr("dy", ".35em")
 
@@ -65,7 +65,13 @@ var d3utils = {};
         // are we past the center?
         return (d.endAngle + d.startAngle)/2 > Math.PI ? "end" : "start";
       })
-      .text(function(d) { return d.data.name; });
+      .text(function(d) {
+        // Don't show labels for slices that are 0
+        if(d.data.val === 0) {
+          return '';
+        }
+        return d.data.name;
+      });
   }
 
   function drawHorizontalBarChart(d3div, chart_data) {
@@ -105,10 +111,10 @@ var d3utils = {};
       .attr("y", function(d,i) { return i * bh; })
       .attr("height", bh)
       .attr("fill", function(d) { return d.col; });
-      
+
     g.append("text")
       .attr("transform", function(d, i) { return "translate(" + (d.val * sx + textmargin) + "," + ((i+1) * bh - textoffy) + ")"; })
-      .text(function(d) { return d.text });   
+      .text(function(d) { return d.text });
   }
 
   // exports

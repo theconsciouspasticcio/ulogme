@@ -1,0 +1,278 @@
+:root {
+  --text-color: #333;
+  --subtext-color: #666;
+  --banner-color: rgb(71,67,73);
+  --heading-color: rgb(228, 228, 228);
+}
+
+body {
+  font-family: Arial, Charcoal, sans-serif;
+  color: #333;
+  font-size: 20px;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+.center {
+  text-align: center;
+}
+g {
+  font-size: 14px;
+  font-family: "arial";
+}
+p {
+  margin: 0;
+  padding: 0;
+}
+.tt {
+  font-size: 30px;
+  margin-top: 30px;
+}
+.td {
+  font-size: 18px;
+  font-style: italic;
+  color: var(--subtext-color);
+}
+#piechart {
+  text-align: center;
+  margin-top: 40px;
+  padding-top: 20px;
+  margin-bottom: 20px;
+  border-top: 1px solid #aaa;
+}
+.line {
+  fill: none;
+  stroke: #55f;
+  stroke-width: 1px;
+}
+.al {
+  text-align: center;
+  color: #55f;
+}
+#keygraph {
+  margin-top: 20px;
+  border-top: 1px solid #aaa;
+}
+#keystats {
+  margin-top: 20px;
+}
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  height: 70px;
+  background-color: var(--banner-color);
+}
+h1 {
+  text-align: center;
+  color: #fff;
+  font-size: 30px;
+  font-weight: normal;
+  margin: 0;
+  margin-top: 18px;
+  margin-bottom: 20px;
+}
+.navbar a.nav-link {
+  position: absolute;
+  font-size: 20px;
+  right: 100px;
+  bottom: 20px;
+  font-weight: normal;
+  color: white !important;
+}
+#content {
+  margin-top: 70px;
+}
+h2 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-family: "Arial", sans-serif;
+  font-weight: 300;
+  background-color: var(--heading-color);
+  margin: 0;
+  padding: 20px;
+  box-shadow: 0px 0px 3px 0px #aaa;
+}
+.hbtitle {
+  text-align: left;
+}
+#leftarrow {
+  float: left;
+}
+#rightarrow {
+  float: right;
+}
+.arrow {
+  font-size: 50px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 40px;
+  padding-right: 40px;
+  color: #662;
+  cursor: pointer;
+  /* make arrows unselectable, since they are text technically */
+  -webkit-user-select: none; /* Chrome all / Safari all */
+  -moz-user-select: none; /* Firefox all */
+  -ms-user-select: none; /* IE 10+ */
+  -o-user-select: none; /* not yet supported well */
+  user-select: none;
+}
+#notesinfo {
+  font-size: 16px;
+  font-family: "arial";
+  background-color: #ffa;
+  border: 1px solid #ee9;
+  padding: 10px;
+  border-radius: 10px;
+  display: none;
+}
+#notesinfohide {
+  float: right;
+  font-size: 40px;
+  cursor: pointer;
+  /* make unselectable, since they are text technically */
+  -webkit-user-select: none; /* Chrome all / Safari all */
+  -moz-user-select: none; /* Firefox all */
+  -ms-user-select: none; /* IE 10+ */
+  -o-user-select: none; /* not yet supported well */
+  user-select: none;
+  color: #aa5;
+}
+#reloadbutton {
+  position: absolute;
+  color: white;
+  font-size: 60px;
+  right: 20px;
+  top: 0px;
+  cursor: pointer;
+}
+#notesadd {
+  font-weight: bold;
+  font-size: 20px;
+  border: 1px solid #333;
+  cursor: pointer;
+  text-align: center;
+  padding: 5px;
+  width: 100px;
+  background-color: #7e7;
+  border-radius: 5px;
+}
+input[type="text"] {
+  font-size: 20px;
+  margin-bottom: 5px;
+  display: block;
+  padding: 5px;
+  border: solid 1px #aa5;
+  width: 500px;
+  color: #333;
+}
+#spinnerdiv {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50px;
+  height: 50px;
+}
+#overviewlink a {
+  color: #fff;
+}
+.fdiv {
+  display: inline-block;
+  margin-right: 50px;
+}
+pre {
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 3px;
+  font-size: 16px;
+}
+#blogenter textarea {
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 3px;
+  font-size: 16px;
+  height: 200px;
+  width: 100%;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+#blogenter {
+  margin-top: 10px;
+}
+#blogentersubmit {
+  width: 200px;
+  height: 40px;
+}
+#keystats text {
+  font-size: 0.7em;
+  fill: #333;
+}
+#spinnerdiv {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50px;
+  height: 50px;
+}
+#reloadbutton {
+  position: absolute;
+  color: white;
+  font-size: 60px;
+  right: 20px;
+  top: 0px;
+  cursor: pointer;
+}
+.line {
+  fill: none;
+  stroke: #55f;
+  stroke-width: 2px;
+}
+#keystats {
+  width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.al {
+  float: left;
+  font-size: 16px;
+  padding: 0;
+  margin: 0;
+}
+.divkeys {
+  height: 16px;
+}
+.legenddiv p {
+  display: inline-block;
+  margin-right: 10px;
+  cursor: pointer;
+  padding: 5px;
+}
+.skipdrawyes {
+  text-decoration: line-through;
+  color: #999 !important;
+}
+.skipdrawno {
+  text-decoration: underline;
+}
+#keysummary {
+  display: inline-block;
+}
+#timesummary {
+  display: inline-block;
+}
+#summaries {
+  margin-top: 30px;
+  margin-bottom: 40px;
+}
+#overview-bar {
+  margin-top: 20px;
+}
