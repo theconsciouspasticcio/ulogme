@@ -1,7 +1,8 @@
 #!/bin/bash
-SRC_DIR=$(dirname $(realpath $0))
+SRC_DIR=${0%/*}
 
 # Need to be in directory to run
-cd $SRC_DIR
-python2 ./ulogme_serve.py & bash ./ulogme.sh
+pushd $SRC_DIR
+ps aux | grep '[u]logme' | grep -v 'tmux' | awk '{print $2}' | grep -v 'tmux' | xargs kill
 
+/usr/bin/python3 ./ulogme_serve.py & bash ./ulogme.sh

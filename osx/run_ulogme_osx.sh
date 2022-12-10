@@ -15,12 +15,15 @@ ACTIVE_WINDOW_FILE="$(pwd)/logs/window_%s.txt" # %s will be repaced with timesta
 KEYSTROKE_RAW_FILE="$(pwd)/logs/keyfreqraw.txt"
 
 control_c() {
+  echo "Caught keyboard interrupt. Killing Python process."
   cat .python_pid | xargs kill
   rm -f $PID_FILE
   exit
 }
 
 trap control_c SIGINT
+
+echo "starting osx ulogme"
 
 if [ "$DEV" = true ]; then
   # Directly invoke the python script
