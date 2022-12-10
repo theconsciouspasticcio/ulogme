@@ -91,24 +91,20 @@ def update_events(force=False):
 
         if dowrite or force:
             # okay lets do work, frontend expects a dictionary with keys with suffix _events
-            events = {f"{k}_events": load_events(x) for k, x in log_files_for_day.items() if k != "blog"}
-            if "keyfreq_events" in events:
-                for key_freq_entry in events["keyfreq_events"]:
-                    try:
-                        key_freq_entry["s"] = int(key_freq_entry["s"])  # int convert
-                    except Exception:
-                        print(f"Error on {key_freq_entry}")
+            event_out = {}
+            for log_type, v in log_files_for_day.items():
+                if log_type == "blog":
+                    with open(log_files_for_day["blog"], "r") as fh:
+                        event_out["blog"] = fh.read()
+                    continue
 
-            if "blog" in log_files_for_day:
-                with open(log_files_for_day["blog"], "r") as fh:
-                    events["blog"] = fh.read()
-
-            for k in LOG_TYPES:
-                if k != "blog" and k + "_events" not in events:
-                    events[k + "_events"] = []
+                event_out[log_type + "_events"] = load_events(v)
+                if log_type == "keyfreq":
+                    for k in event_out[log_type + "_events"]:
+                        k["s"] = int(k["s"])  # int convert
 
             with open(fwrite, "w") as fh:
-                fh.write(json.dumps(events))
+                fh.write(json.dumps(event_out))
             logging.info("wrote " + fwrite)
 
     fwrite = os.path.join(RENDER_ROOT, "export_list.json")
