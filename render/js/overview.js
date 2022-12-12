@@ -8,6 +8,11 @@ function drawEvents() {
   var d3div = d3.select("#overview-bar");
   var ldiv = d3div.append("div").attr("class", "legenddiv");
 
+  // load skipdraw from local storage
+  var skipdrawstr = localStorage.getItem("skipdraw");
+  if (skipdrawstr) {
+    skipdraw = JSON.parse(skipdrawstr);
+  }
   for (var i = 0; i < etypes.length; i++) {
     var pi = ldiv
       .append("p")
@@ -33,6 +38,9 @@ function drawEvents() {
           } else {
             skipdraw[m] = false;
           }
+          // save value of skipdraw in local storage
+          localStorage.setItem("skipdraw", JSON.stringify(skipdraw));
+          console.log("saved skipdraw to local storage");
           drawEvents(); // and redraw the graph!
         };
       })(i)
