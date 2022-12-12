@@ -133,6 +133,7 @@ function drawEvents() {
       dtimes.push({
         val: edur[k].hasOwnProperty(m) ? edur[k][m] : 0,
         col: color_hash[m],
+        name: m,
       });
     }
 
@@ -149,6 +150,16 @@ function drawEvents() {
       ); // have to closure k
 
     var gh = 0;
+
+    tooltip = d3
+      .select("body")
+      .append("div")
+      .style("position", "absolute")
+      .style("z-index", "10")
+      .style("visibility", "hidden")
+      .text("");
+
+    // On mouseout, hide the tooltip
     svgg
       .selectAll(".day" + k)
       .data(dtimes)
@@ -165,6 +176,28 @@ function drawEvents() {
       })
       .attr("fill", function (d) {
         return d.col;
+      })
+      .on("mouseover", function (d) {
+        // On mouseover of the rect, show a tooltip with title m and duration val
+        // convert duration to hours: minutes: seconds
+        return tooltip
+          .html(
+            d.name +
+              ": " +
+              Math.floor(d.val / 3600) +
+              "h " +
+              (Math.floor(d.val / 60) % 60) +
+              "m " +
+              (d.val % 60) +
+              "s"
+          )
+          .style("visibility", "visible");
+      })
+      .on("mousemove", function () {
+        // Move the tooltip with the mouse
+        return tooltip
+          .style("top", d3.event.pageY - 10 + "px")
+          .style("left", d3.event.pageX + 10 + "px");
       });
   }
 }
