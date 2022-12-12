@@ -161,7 +161,6 @@ function visualizeKeyFreq(es) {
 }
 
 function visualizeNotes(es) {
-  console.log("number of notes:" + es.length);
   $("#notesvis").empty();
   if (!draw_notes) return; // draw_notes is set in render_settings.js
   if (es.length === 0) return; // nothing to do here...
@@ -173,7 +172,9 @@ function visualizeNotes(es) {
     var d = {};
     d.x = e.t - t00;
     d.s = e.s;
-    if (e.s.indexOf("coffee") > -1) {
+    // search e.s in lower case
+
+    if (e.s.toLowerCase().indexOf("coffee") > -1) {
       // we had coffee
       coffees.push(e.t - t00);
     }
@@ -254,8 +255,6 @@ function visualizeNotes(es) {
 
 var clicktime;
 function visualizeEvent(es, filter) {
-  console.log("number of events:" + es.length);
-  console.log("filter:" + filter);
   var dts = [];
   var ttot = 0;
   var ttoti = [];
@@ -457,7 +456,6 @@ function fetchAndLoadEvents(daylog) {
       ft = daylog.t1;
     }
 
-    console.log(data)
     // render blog entry
     blog = "blog" in data ? data["blog"] : "";
     if (blog === "") {
@@ -517,9 +515,7 @@ function start() {
     $("#notesinfo").hide();
   });
 
-  // setup refresh handler to create a post request to /reload
-  $("#reloadbutton").click(function () {
-    startSpinner();
+  function updateData() {
     $.post(
       "/refresh",
       { time: event_list[cur_event_id].t0 },
@@ -532,7 +528,16 @@ function start() {
         }
       }
     );
+  }
+
+  // setup refresh handler to create a post request to /reload
+  $("#reloadbutton").click(function () {
+    startSpinner();
+    updateData();
   });
+
+  // call updateData every minute
+  setInterval(updateData, 60000);
 
   // set up notes add handler
   $("#notesadd").click(function () {

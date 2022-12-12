@@ -244,7 +244,6 @@ function analyzeEvents() {
     var es = events[k]["window_events"]; // window events for day k
     mapEvents(es); // assign group names to structure in field .m, build etypes[]
   }
-  console.log("etypes", etypes);
   color_hash = colorHashStrings(etypes);
 
   for (var k = 0; k < events.length; k++) {
@@ -565,17 +564,17 @@ function stopSpinner() {
 var event_list;
 var events;
 function start() {
-    loadAllEvents();
+  loadAllEvents();
 
-    $("#reloadbutton").click(function () {
-      startSpinner();
-      $.post("/refresh", { time: 0 }, function (data, status) {
-        console.log("Data: " + data + "\nStatus: " + status);
-        stopSpinner();
-        if (data === "OK") {
-          // everything went well, refresh current view
-          loadAllEvents(); // reload all events
-        }
-      });
+  $("#reloadbutton").click(function () {
+    startSpinner();
+    $.post("/refresh", { time: 0 }, function (data, status) {
+      console.log("Data: " + data + "\nStatus: " + status);
+      stopSpinner();
+      if (data === "OK") {
+        // everything went well, refresh current view
+        loadAllEvents(); // reload all events
+      }
     });
+  });
 }
