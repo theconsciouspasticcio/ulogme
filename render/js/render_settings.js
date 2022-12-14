@@ -13,30 +13,41 @@ var title_mappings = [
   { pattern: /colab.research.google/, mapto: 'Coding' },
   { pattern: /.pdf/, mapto: 'Papers' },
   { pattern: /Mendeley/, mapto: 'Papers' },
+  { pattern: /Teams/, mapto: 'Meetings' },
   { pattern: /edwardr@/, mapto: 'Coding' },
   { pattern: /iTerm2/, mapto: 'Coding' },
   { pattern: /Code/, mapto: 'Coding' },
   { pattern: /__LOCKEDSCREEN/, mapto: 'Locked Screen' }, // __LOCKEDSCREEN is a special token
   { pattern: /ScreenSaverEngine/, mapto: 'Locked Screen' },
   { pattern: /loginwindow/, mapto: 'Locked Screen' },
+
   { pattern: /TeXworks/, mapto: 'Latex' },
-  { pattern: /pytorch/, mapto: 'Other Work' },
   { pattern: /localhost/, mapto: 'Other Work' },
   { pattern: /aml./, mapto: 'Other Work' },
   { pattern: /blog/, mapto: 'Learning' },
-  { pattern: /lesswrong/, mapto: 'Learning' },
-  { pattern: /matter/, mapto: 'Learning' },
-  { pattern: /anki/, mapto: 'Learning' },
-  { pattern: /obsidian/, mapto: 'Learning' },
+  { pattern: /TickTick/, mapto: 'Admin' },
+  { pattern: /Outlook/, mapto: 'Admin' },
+
+  { pattern: /jamboard/, mapto: 'Other Work' },
   { pattern: /atlassian/, mapto: 'Other Work' },
-  { pattern: /stack/, mapto: 'Other Work' },
   { pattern: /scalars/, mapto: 'Other Work' },
-  { pattern: /search/, mapto: 'Other Work' },
   { pattern: /git/, mapto: 'Other Work' },
-  { pattern: /Teams/, mapto: 'Meetings' },
-  { pattern: /JamBoard/, mapto: 'Meetings' },
+
   { pattern: /youtube/, mapto: 'Time Wasting' },
   { pattern: /ebay/, mapto: 'Time Wasting' },
+  { pattern: /localhost:8124/, mapto: 'Time Wasting' }, // meta
+
+  { pattern: /pytorch/, mapto: 'Coding' },
+  { pattern: /python/, mapto: 'Coding' },
+  { pattern: /stackoverflow/, mapto: 'Coding' },
+
+  { pattern: /lesswrong/, mapto: 'Learning' },
+  { pattern: /mlscaling/, mapto: 'Learning' },
+  { pattern: /matter/, mapto: 'Learning' },
+  { pattern: /Anki/, mapto: 'Learning' },
+  { pattern: /Obsidian/, mapto: 'Learning' },
+  { pattern: /agi/, mapto: 'Learning' },
+  { pattern: /align/, mapto: 'Learning' },
 ];
 
 // be very careful with ordering in the above because titles
@@ -65,10 +76,10 @@ function mapwin(w) {
 // to group my work stuff and play stuff together.
 var display_groups = [];
 // Non work related
+display_groups.push(["Coding", "Papers", "Other Work", "Admin", "Meetings"]); // work related
+display_groups.push(["Learning"]); // Personal development
 display_groups.push(["Google Chrome", "MISC"]); // internet related
-display_groups.push(["Coding", "Papers", "Other Work"]); // work related
-display_groups.push(["Learning", "Development"]); // Personal development
-display_groups.push(["TeXworks"]); // paper writing related
+// display_groups.push(["TeXworks"]); // paper writing related
 display_groups.push(["Locked Screen"]); // computer not being used
 display_groups.push(["Time Wasting"])
 // list of titles that classify as "hacking", or being productive in general
@@ -86,4 +97,4 @@ var draw_notes = true;
 // experimental coffee levels indicator :)
 // looks for notes that mention coffee and shows
 // levels of coffee in body over time
-var draw_coffee = false;
+var draw_coffee = true;
