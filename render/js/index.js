@@ -290,7 +290,12 @@ function visualizeEvent(es, filter) {
     var d = {};
     d.x = e.t - t00;
     d.w = e.dt;
-    d.s = e.s + " (" + strTimeDelta(e.dt) + ")";
+    // trim d.s to 100 chars
+    if (e.s.length < 100) d.s = e.s;
+    else {
+      d.s = e.s.substring(0, 100) + "...";
+    }
+    d.s = d.s + " (" + strTimeDelta(e.dt) + ")";
     d.fix = fix;
     dts.push(d);
   }
