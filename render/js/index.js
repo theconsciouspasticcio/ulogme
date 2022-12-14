@@ -160,7 +160,9 @@ function visualizeKeyFreq(es) {
 }
 
 function visualizeNotes(es) {
+  // if es is undefined, skip and return
   $("#notesvis").empty();
+  if (es === undefined) return;
   if (!draw_notes) return; // draw_notes is set in render_settings.js
   if (es.length === 0) return; // nothing to do here...
 
