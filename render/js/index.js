@@ -253,6 +253,20 @@ function visualizeNotes(es) {
     });
 }
 
+function visualizeBlog(blog_entry) {
+  // render blog entry
+  if (blog_entry === undefined) {
+    blog_entry = "";
+  }
+  if (blog_entry === "") {
+    blog_entry = "click to enter blog for this day";
+  }
+  blog = blog_entry  // update global
+  console.log("blog: " + blog_entry)
+  console.log(marked.parse(blog));
+  $("#blogpre").html(marked.parse(blog));
+}
+
 var clicktime;
 function visualizeEvent(es, filter) {
   var dts = [];
@@ -400,7 +414,7 @@ function statEvents(es) {
 function writeHeader() {
   var date0 = new Date(t00 * 1000);
   var date1 = new Date(ft * 1000);
-  $("#header").html("<h2>" + ppDate(date0) + " - " + ppDate(date1) + "</h2>");
+  $("#header").html("<h2 class='section-heading'>" + ppDate(date0) + " - " + ppDate(date1) + "</h2>");
 }
 
 function startSpinner() {
@@ -456,14 +470,8 @@ function fetchAndLoadEvents(daylog) {
       ft = daylog.t1;
     }
 
-    // render blog entry
-    blog = "blog" in data ? data["blog"] : "";
-    if (blog === "") {
-      blog = "click to enter blog for this day";
-    }
-    $("#blogpre").text(blog);
-
     visualizeEvents(events);
+    visualizeBlog(data["blog"]);
     writeHeader();
     createPieChart(events, etypes);
     computeKeyStats(events, key_events);
@@ -596,17 +604,19 @@ function start() {
     $("#blogpre").hide();
     $("#blogenter").show();
     // set txt to be empty if it is the default text
-    if (txt === "click to enter blog for this day") {
+    if (blog === "click to enter blog for this day") {
       txt = "";
+    } else {
+      txt = blog;
     }
-    $("#blogentertxt").val(txt);
+    $("#blogentertxt").val(blog);
     $("#blogentertxt").focus();
   });
 
   // setup the submit blog entry button
   $("#blogentersubmit").click(function () {
     var txt = $("#blogentertxt").val();
-    $("#blogpre").text(txt);
+    visualizeBlog(txt);
     $("#blogpre").show();
     $("#blogenter").hide();
 
