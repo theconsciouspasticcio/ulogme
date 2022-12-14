@@ -13,7 +13,6 @@ function colorHashStrings(arr) {
   }
 
   // If color scale is not defined, use HSL
-  arr.sort();
   for (var i = 0, N = arr.length; i < N; i++) {
     var title = arr[i];
 
@@ -26,6 +25,10 @@ function colorHashStrings(arr) {
   }
   return color_hash;
 }
+
+// flatten nested arry display_groups into a single array
+var all_display_names = _.flatten(display_groups);
+var color_hash = colorHashStrings(all_display_names);
 
 // utility that looks at the URL of current page and sets QueryString
 var QueryString = (function () {

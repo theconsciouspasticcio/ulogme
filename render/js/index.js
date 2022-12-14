@@ -1,5 +1,4 @@
 // GLOBALS
-var color_hash = {}; // mapped titles -> hsl color to draw with
 var t00; // initial time for a day (time first event began)
 var ft; // final time for a day (time last event ended)
 var ecounts = {};
@@ -453,9 +452,6 @@ function fetchAndLoadEvents(daylog) {
 
     // compute various statistics
     statEvents(events);
-
-    // create color hash table, maps from window titles -> HSL color
-    color_hash = colorHashStrings(_.uniq(_.pluck(events, "m")));
 
     // find the time extent: min and max time for this day
     if (events.length > 0) {

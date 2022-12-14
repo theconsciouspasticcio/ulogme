@@ -236,7 +236,6 @@ function statEvents(es, ecounts) {
 }
 
 var edur = []; // stores durations for events for all days. Core structure!
-var color_hash = {};
 function analyzeEvents() {
   edur = []; // reset global var
 
@@ -244,7 +243,6 @@ function analyzeEvents() {
     var es = events[k]["window_events"]; // window events for day k
     mapEvents(es); // assign group names to structure in field .m, build etypes[]
   }
-  color_hash = colorHashStrings(etypes);
 
   for (var k = 0; k < events.length; k++) {
     edur.push({}); // hmmm
