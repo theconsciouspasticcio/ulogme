@@ -1,7 +1,7 @@
 :root {
   --text-color: #333;
   --subtext-color: #666;
-  --banner-color: rgb(71,67,73);
+  --banner-color: rgb(71, 67, 73);
   --heading-color: rgb(228, 228, 228);
 }
 
@@ -28,7 +28,7 @@ p {
   padding: 0;
 }
 .tt {
-  font-size: 30px;
+  font-size: 25px;
   margin-top: 30px;
 }
 .td {
@@ -202,10 +202,10 @@ input[type="text"] {
 #blogenter textarea {
   background-color: #f9f9f9;
   border: 1px solid #ccc;
-  padding: 10px;
+  padding: 20px;
   border-radius: 3px;
   font-size: 16px;
-  height: 200px;
+  height: 300px;
   width: 100%;
   margin: 0;
   -webkit-box-sizing: border-box;
@@ -282,4 +282,13 @@ input[type="text"] {
 }
 #overview-bar {
   margin-top: 20px;
+}
+.fsdiv {
+  margin-bottom: 10px;
+}
+.tooltip {
+  background-color: rgb(230, 230, 230);
+  border: 1px solid #aaa;
+  border-radius: 3px;
+  padding: 5px;
 }
