@@ -262,8 +262,8 @@ function visualizeBlog(blog_entry) {
   if (blog_entry === "") {
     blog_entry = "click to enter blog for this day";
   }
-  blog = blog_entry  // update global
-  console.log("blog: " + blog_entry)
+  blog = blog_entry; // update global
+  console.log("blog: " + blog_entry);
   console.log(marked.parse(blog));
   $("#blogpre").html(marked.parse(blog));
 }
@@ -420,7 +420,13 @@ function statEvents(es) {
 function writeHeader() {
   var date0 = new Date(t00 * 1000);
   var date1 = new Date(ft * 1000);
-  $("#header").html("<h2 class='section-heading'>" + ppDate(date0) + " - " + ppDate(date1) + "</h2>");
+  $("#header").html(
+    "<h2 class='section-heading'>" +
+      ppDate(date0) +
+      " - " +
+      ppDate(date1) +
+      "</h2>"
+  );
 }
 
 function startSpinner() {
