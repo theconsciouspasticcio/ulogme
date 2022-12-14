@@ -490,14 +490,17 @@ var loaded = false;
 var cur_event_id = -1;
 var clicktime = 0;
 function start() {
-  // create tooltip div
+  // create tooltip div with class "tooltip"
   tooltip = d3
     .select("body")
     .append("div")
+    .attr("class", "tooltip")
     .style("position", "absolute")
     .style("z-index", "10")
     .style("visibility", "hidden")
-    .text("");
+    .text("")
+    .style("max-width", "300px")
+    .style("word-wrap", "break-word");
 
   // we do this random thing to defeat caching. Very annoying
   $.getJSON(
