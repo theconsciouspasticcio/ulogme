@@ -625,6 +625,13 @@ function start() {
     $("#blogentertxt").focus();
   });
 
+  // if ctrl-enter or shift-enter is pressed in blog text, submit
+  $("#blogentertxt").keyup(function (event) {
+    if (event.keyCode == 13 && (event.ctrlKey || event.shiftKey)) {
+      $("#blogentersubmit").click();
+    }
+  });
+
   // setup the submit blog entry button
   $("#blogentersubmit").click(function () {
     var txt = $("#blogentertxt").val();
