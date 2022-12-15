@@ -23,10 +23,14 @@ def load_events(fname):
     with open(fname, "r") as fh:
         for w in fh:
             w = w.strip()
-            ix = w.find(" ")  # find first space, that's where stamp ends
-            stamp = int(w[:ix])
-            str = w[ix + 1 :]
-            events.append({"t": stamp, "s": str})
+            line = w.split(" ", maxsplit=1)
+            if len(line) == 1:
+                # an error has occured an nothing has been logged
+                timestamp = line[0]
+                label = "unk"
+            else:
+                timestamp, label = line
+            events.append({"t": int(timestamp), "s": label})
     return events
 
 
