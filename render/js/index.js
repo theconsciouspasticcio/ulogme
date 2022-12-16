@@ -261,11 +261,68 @@ function visualizeBlog(blog_entry) {
   }
   if (blog_entry === "") {
     blog_entry = "click to enter blog for this day";
+  } else {
+    blog = blog_entry; // update global
   }
-  blog = blog_entry; // update global
-  console.log("blog: " + blog_entry);
-  console.log(marked.parse(blog));
-  $("#blogpre").html(marked.parse(blog));
+  $("#blogpre").html(marked.parse(blog_entry));
+
+  // enable all checkboxes
+  $("#blogpre input[type=checkbox]").each(function () {
+    $(this).prop("disabled", false);
+  });
+
+  // remove css that adds :marker to ul containing checkboxes
+  $("#blogpre ul").each(function () {
+    $(this).removeClass("contains-task-list");
+  });
+
+  var checkboxes = $("#blogpre input[type=checkbox]");
+  var ncb = checkboxes.length;
+
+  for (var i = 0; i < ncb; i++) {
+    var cb = checkboxes[i];
+    // parent li
+    var li = $(cb).parent();
+    // set ::marker to be ""
+    li.css("list-style-type", "none");
+    li.css("margin-left", "8px");
+  }
+
+  // add click handler on checkboxes
+  $("#blogpre input[type=checkbox]").click(function (event) {
+    // find the line in the markdown in the variable blog
+    // that corresponds to this checkbox
+    // and toggle the checkbox
+    checkbox_idx = checkboxes.index(this);
+    // iterate over lines in blog counting checkboxes
+    var lines = blog.split("\n");
+    var nlines = lines.length;
+    n = 0;
+    for (var i = 0; i < nlines; i++) {
+      var line = lines[i];
+      // if line starts with - [ ] or - [x], it is a checkbox
+      if (line.indexOf("- [ ]") === 0 || line.indexOf("- [x]") === 0) {
+        if (n === checkbox_idx) {
+          // replace - [ ] with - [x] or vice versa
+          if (line.indexOf("- [ ]") === 0) {
+            lines[i] = line.replace("- [ ]", "- [x]");
+          }
+          if (line.indexOf("- [x]") === 0) {
+            lines[i] = line.replace("- [x]", "- [ ]");
+          }
+          break;
+        }
+        n++;
+      }
+    }
+    blog = lines.join("\n");
+
+    postBlog(blog);
+    event.stopPropagation();
+  });
+
+  // set cursor to pointer on checkboxes
+  $("#blogpre input[type=checkbox]").css("cursor", "pointer");
 }
 
 var clicktime;
@@ -639,20 +696,25 @@ function start() {
     $("#blogpre").show();
     $("#blogenter").hide();
 
-    // submit to server with POST request
-    $.post(
-      "/blog",
-      { time: event_list[cur_event_id].t0, post: txt },
-      function (data, status) {
-        console.log("Data: " + data + "\nStatus: " + status);
-        stopSpinner();
-        if (data === "OK") {
-          // everything went well
-        }
-      }
-    );
+    postBlog(txt);
+
+    setInterval(redraw, 1000); // in case of window resize, we can redraw
   });
-  setInterval(redraw, 1000); // in case of window resize, we can redraw
+}
+
+function postBlog(txt) {
+  // submit to server with POST request
+  $.post(
+    "/blog",
+    { time: event_list[cur_event_id].t0, post: txt },
+    function (data, status) {
+      console.log("Data: " + data + "\nStatus: " + status);
+      stopSpinner();
+      if (data === "OK") {
+        // everything went well
+      }
+    }
+  );
 }
 
 // redraw if dirty (due to window resize event)

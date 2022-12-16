@@ -219,6 +219,12 @@ input[type="text"] {
   width: 200px;
   height: 40px;
 }
+ul {
+  padding-left: 0;
+}
+li {
+  margin-left: 30px;
+}
 #keystats text {
   font-size: 0.7em;
   fill: #333;
