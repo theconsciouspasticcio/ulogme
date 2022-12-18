@@ -95,7 +95,7 @@ def update_events(force=False):
 
         if dowrite or force:
             # okay lets do work, frontend expects a dictionary with keys with suffix _events
-            event_out = {}
+            event_out = {k + "_events": [] for k in LOG_TYPES if k != "blog"}
             for log_type, v in log_files_for_day.items():
                 if log_type == "blog":
                     with open(log_files_for_day["blog"], "r") as fh:
