@@ -48,13 +48,13 @@ function drawEvents() {
   }
 
   var margin = { top: 10, right: 10, bottom: 100, left: 40 };
-  var fullwidth = 1200;
+  var fullwidth = $("#overview-bar").width();
   var fullheight = 800;
   var width = fullwidth - margin.left - margin.right;
   var height = fullheight - margin.top - margin.bottom;
   var svg = d3div
     .append("svg")
-    .attr("width", width + margin.left + margin.right)
+    .attr("width", "100%")
     .attr("height", height + margin.top + margin.bottom);
 
   var yscale = 0.008;
@@ -536,7 +536,7 @@ function visualizeTimeSummary(edur) {
   }
   gstats = _.filter(gstats, function (d) {
     return d.val > 0;
-  }); // cutoff at 0 keys
+  });
   _.each(gstats, function (d) {
     d.text = (d.val / 60 / 60).toFixed(2) + "hr (" + d.name + ")";
   });
@@ -551,6 +551,9 @@ function visualizeTimeSummary(edur) {
   chart_data.title = "total time per window";
   chart_data.data = gstats;
   d3utils.drawHorizontalBarChart(d3.select("#timesummary"), chart_data);
+
+  // add another chart that includes the total time spent in the last 7 days
+  console.log("edur: " + edur[0]);
 }
 
 function startSpinner() {
@@ -580,3 +583,15 @@ function start() {
     });
   });
 }
+
+// redraw if dirty (due to window resize event)
+function redraw() {
+  drawEvents();
+  drawKeyEvents();
+}
+
+var doit;
+window.onresize = function () {
+  clearTimeout(doit);
+  doit = setTimeout(redraw, 1000);
+};

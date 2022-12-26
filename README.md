@@ -3,9 +3,11 @@
 
 This is a a fork of Andrej Karpathy's [ulogme](https://github.com/karpathy/ulogme).
 
-**Modifictions:**
+**Modifications:**
 - Update / refactor to use Python 3
-- Various frontend tweaks e.g. font sizes to make things more readable, prevent tools tips from being cut off, 
+- Various frontend tweaks e.g. font sizes to make things more readable, prevent tools tips from being cut off,
+- Add tooltips that show total time on hover on the overview page
+- Added markdown rendering (plus clickable checkboxes) on the blog section
 
 
 # Original README:

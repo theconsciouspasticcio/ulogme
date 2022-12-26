@@ -6,15 +6,18 @@
 }
 
 body {
-  font-family: Arial, Charcoal, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";;
   color: #333;
   font-size: 20px;
   margin: 0;
   padding: 0;
 }
 .container {
-  margin-left: 50px;
-  margin-right: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
+  max-width: 1500px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .center {
   text-align: center;
@@ -57,7 +60,9 @@ p {
   border-top: 1px solid #aaa;
 }
 #keystats {
+  border-top: 1px solid #ccc;
   margin-top: 20px;
+  padding-top: 20px;
 }
 .navbar {
   position: fixed;
@@ -188,7 +193,7 @@ input[type="text"] {
 #blogpre {
   margin-top: 40px;
   margin-bottom: 40px;
-  font-family: monospace;
+  font-family: inherit;
   word-wrap: break-word;
   background-color: #f9f9f9;
   border: 1px solid #ccc;
@@ -196,7 +201,14 @@ input[type="text"] {
   border-radius: 3px;
   font-size: 16px;
 }
-#blogpre :first-child {
+
+/* set margin top to 0 if first element of blogpre is a heading */
+#blogpre h1:first-child,
+#blogpre h2:first-child,
+#blogpre h3:first-child,
+#blogpre h4:first-child,
+#blogpre h5:first-child,
+#blogpre h6:first-child {
   margin-top: 0;
 }
 #blogenter textarea {
@@ -205,7 +217,6 @@ input[type="text"] {
   padding: 20px;
   border-radius: 3px;
   font-size: 16px;
-  height: 300px;
   width: 100%;
   margin: 0;
   -webkit-box-sizing: border-box;
@@ -214,6 +225,11 @@ input[type="text"] {
 }
 #blogenter {
   margin-top: 10px;
+}
+.blogcontainer {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 }
 #blogentersubmit {
   width: 200px;
@@ -248,11 +264,6 @@ li {
   fill: none;
   stroke: #55f;
   stroke-width: 2px;
-}
-#keystats {
-  width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
 }
 .al {
   float: left;

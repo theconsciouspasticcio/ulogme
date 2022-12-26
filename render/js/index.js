@@ -323,6 +323,11 @@ function visualizeBlog(blog_entry) {
 
   // set cursor to pointer on checkboxes
   $("#blogpre input[type=checkbox]").css("cursor", "pointer");
+
+  // stop event propagation on links
+  $("#blogpre a").click(function (event) {
+    event.stopPropagation();
+  });
 }
 
 var clicktime;
@@ -375,8 +380,14 @@ function visualizeEvent(es, filter) {
     filter_div.append("p").attr("class", "td").text(txt);
   }
 
-  var W = $(window).width() - 40;
-  var svg = div.append("svg").attr("width", "100%").attr("height", 70);
+  // W is the width of div with the class container
+  var W = $("#eventvis").width();
+
+  var svg = div
+    .append("svg")
+    .attr("width", W)
+    .attr("height", 70)
+    .attr("viewBox", "0 0 " + W + " 70");
 
   var sx = (ft - t00) / W;
   var g = svg
@@ -682,11 +693,27 @@ function start() {
     $("#blogentertxt").focus();
   });
 
-  // if ctrl-enter or shift-enter is pressed in blog text, submit
+  // if ctrl-enter or shift-enter or cmd-enter is pressed in blog text, submit
   $("#blogentertxt").keyup(function (event) {
-    if (event.keyCode == 13 && (event.ctrlKey || event.shiftKey)) {
+    if (
+      (event.keyCode == 13 && event.ctrlKey) ||
+      (event.keyCode == 13 && event.shiftKey) ||
+      (event.keyCode == 13 && event.metaKey)
+    ) {
       $("#blogentersubmit").click();
     }
+  });
+
+  // for blogentertxt, on any key press, resize the textarea to make the height fit the content
+  $("#blogentertxt").keyup(function (event) {
+    $(this).height(0);
+    $(this).height(this.scrollHeight);
+  });
+
+  // when blogentertxt is focused, resize the textarea to make the height fit the content
+  $("#blogentertxt").focus(function (event) {
+    $(this).height(0);
+    $(this).height(this.scrollHeight);
   });
 
   // setup the submit blog entry button
@@ -700,6 +727,20 @@ function start() {
 
     setInterval(redraw, 1000); // in case of window resize, we can redraw
   });
+
+  // Put all items in the array key_links into the key_links div as a bullet list
+
+  // '<a href="' + key_links[i].link + '">' + key_links[i].key + "</a>"
+  // create unordered list
+  var ul = document.getElementById("key_links");
+  for (var j = 0; j < key_links.length; j++) {
+    var li = document.createElement("li");
+    var a = document.createElement("a");
+    a.href = key_links[j].link;
+    a.innerHTML = key_links[j].key;
+    li.appendChild(a);
+    ul.appendChild(li);
+  }
 }
 
 function postBlog(txt) {
@@ -729,6 +770,15 @@ function redraw() {
 }
 
 var dirty = false;
-$(window).resize(function () {
+
+function resizedw() {
+  console.log("resize");
   dirty = true;
-});
+  redraw();
+}
+
+var doit;
+window.onresize = function () {
+  clearTimeout(doit);
+  doit = setTimeout(resizedw, 1000);
+};
