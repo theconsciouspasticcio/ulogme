@@ -55,7 +55,13 @@ def update_events(force=False):
         L.extend(glob.glob(f"logs/{log_type}_*.txt"))
 
     # extract all times. all log files of form {type}_{stamp}.txt
-    ts = [int(x[x.find("_") + 1 : x.find(".txt")]) for x in L]
+    ts = []
+    for x in L:
+        try:
+            ts.append(int(x[x.find("_") + 1 : x.find(".txt")]))
+        except ValueError:
+            logging.warning(f"Error with filename {x}, skipping")
+
     ts = list(set(ts))
     ts.sort()
 
