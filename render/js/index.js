@@ -189,8 +189,12 @@ function visualizeNotes(es) {
     .attr("class", "tt")
     .attr("style", "color: #964B00")
     .text("Notes");
-  var W = $(window).width() - 40;
-  var svg = div.append("svg").attr("width", W).attr("height", 70);
+  var W = $("#notesvis").width();
+  var svg = div
+    .append("svg")
+    .attr("width", W)
+    .attr("height", 70)
+    .attr("viewBox", "0 0 " + W + " 70");
 
   var sx = (ft - t00) / W;
 
@@ -348,7 +352,7 @@ function visualizeEvent(es, filter) {
     }
     ttot += e.dt;
     ttoti[fix] += e.dt;
-    if (e.dt < 20) continue; // less than few second event? skip drawing. Not a concentrated activity
+    if (e.dt < 10) continue; // less than few second event? skip drawing. Not a concentrated activity
     var d = {};
     d.x = e.t - t00;
     d.w = e.dt;
@@ -487,12 +491,16 @@ function statEvents(es) {
 
 function writeHeader() {
   var date0 = new Date(t00 * 1000);
+  // include day of week
   var date1 = new Date(ft * 1000);
   $("#header").html(
     "<h2 class='section-heading'>" +
-      ppDate(date0) +
-      " - " +
-      ppDate(date1) +
+      date0.toLocaleDateString("en-UK", {
+        weekday: "short",
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      }) +
       "</h2>"
   );
 }
