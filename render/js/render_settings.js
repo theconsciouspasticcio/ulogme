@@ -12,7 +12,7 @@ var title_mappings = [
   { pattern: /\/lab/, mapto: "Coding" },
   { pattern: /colab.research.google/, mapto: "Coding" },
   { pattern: /.pdf/, mapto: "Papers" },
-  { pattern: /Preview/, mapto: "Papers" },
+  { pattern: /Preview/, mapto: "Learning" },
   { pattern: /Mendeley/, mapto: "Papers" },
   { pattern: /Teams/, mapto: "Meetings" },
   { pattern: /edwardr@/, mapto: "Coding" },
@@ -25,6 +25,7 @@ var title_mappings = [
   { pattern: /TeXworks/, mapto: "Latex" },
   { pattern: /localhost/, mapto: "Other Work" },
   { pattern: /aml./, mapto: "Other Work" },
+  { pattern: /Speechmatics/, mapto: "Other Work" },
   { pattern: /blog/, mapto: "Learning" },
   { pattern: /TickTick/, mapto: "Admin" },
   { pattern: /Outlook/, mapto: "Admin" },
@@ -46,10 +47,13 @@ var title_mappings = [
   { pattern: /lesswrong/, mapto: "Learning" },
   { pattern: /mlscaling/, mapto: "Learning" },
   { pattern: /matter/, mapto: "Learning" },
-  { pattern: /Anki/, mapto: "Learning" },
+  { pattern: /Anki/, mapto: "Anki" },
   { pattern: /Obsidian/, mapto: "Learning" },
   { pattern: /agi/, mapto: "Learning" },
   { pattern: /align/, mapto: "Learning" },
+  { pattern: /RobertMiles/, mapto: "Learning" },
+  { pattern: /lilianweng/, mapto: "Learning" },
+  { pattern: /karpathy/, mapto: "Learning" },
 ];
 
 // be very careful with ordering in the above because titles
@@ -79,7 +83,7 @@ function mapwin(w) {
 var display_groups = [];
 // Non work related
 display_groups.push(["Coding", "Papers", "Other Work", "Admin", "Meetings"]); // work related
-display_groups.push(["Learning"]); // Personal development
+display_groups.push(["Learning", "Anki"]); // Personal development
 display_groups.push(["Google Chrome", "MISC"]); // internet related
 // display_groups.push(["TeXworks"]); // paper writing related
 display_groups.push(["Locked Screen"]); // computer not being used
@@ -99,6 +103,7 @@ var draw_notes = true;
 // experimental coffee levels indicator :)
 // looks for notes that mention coffee and shows
 // levels of coffee in body over time
+var draw_coffee = true;
 
 var key_links = [];
 key_links.push({
