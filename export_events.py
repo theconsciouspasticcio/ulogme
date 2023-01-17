@@ -1,9 +1,9 @@
+import glob
 import json
+import logging
 import os
 import os.path
-import glob
-import logging
-
+from datetime import datetime
 
 LOG_TYPES = ["window", "keyfreq", "notes", "blog"]
 ROOT = ""
@@ -73,9 +73,13 @@ def update_events(force=False):
     out_list = []
     for t in ts:
         t0 = t
-        t1 = t0 + 60 * 60 * 24  # 24 hrs later
-        fout = "events_%d.json" % (t0,)
-        out_list.append({"t0": t0, "t1": t1, "fname": fout})
+        # convert t0 to day-month-year
+        t0_string = datetime.fromtimestamp(t0).strftime("%d-%m-%Y")
+        t0_corrected = datetime.fromtimestamp(t0).replace(hour=7)
+        t0_corrected = int(t0_corrected.timestamp())
+        t1 = t0_corrected + 60 * 60 * 24  # 24 hrs later
+        fout = "events_%s.json" % (t0_string,)
+        out_list.append({"t0": t0_corrected, "t1": t1, "fname": fout})
 
         fwrite = os.path.join(RENDER_ROOT, fout)
 
@@ -118,8 +122,15 @@ def update_events(force=False):
             logging.info("wrote " + fwrite)
 
     fwrite = os.path.join(RENDER_ROOT, "export_list.json")
+    filtered_out_list = []
+    start_times = []
+    for k in out_list:
+        if k["t0"] in start_times:
+            continue
+        start_times.append(k["t0"])
+        filtered_out_list.append(k)
     with open(fwrite, "w") as fh:
-        fh.write(json.dumps(out_list))
+        fh.write(json.dumps(filtered_out_list))
     logging.info("wrote " + fwrite)
 
 
