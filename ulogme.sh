@@ -12,5 +12,5 @@ else
   # Assume Linux
   sudo echo -n ""
   sudo ./keyfreq.sh &
-  ./logactivewin.sh
+  ./exwm-logactivewin.sh
 fi

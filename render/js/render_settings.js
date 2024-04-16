@@ -8,6 +8,7 @@
 var title_mappings = [
   { pattern: /Google Chrome/, mapto: "Google Chrome" },
   { pattern: /Firefox/, mapto: "Google Chrome" }, // lol
+  { pattern: /youtube/, mapto: "Tha Tube" }, // lol
   { pattern: /Inotebook/, mapto: "Coding" },
   { pattern: /\/lab/, mapto: "Coding" },
   { pattern: /colab.research.google/, mapto: "Coding" },
