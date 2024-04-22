@@ -11,9 +11,9 @@ var title_mappings = [
   { pattern: /YouTube/, mapto: "Learning" },
   // { pattern: /TDA/, mapto: "Learning" }, // lol
   { pattern: /vterm/, mapto: "Coding" },
-  { pattern: /\/lab/, mapto: "Coding" },
+  { pattern: /colab/, mapto: "Coding" },
   // { pattern: /colab.research.google/, mapto: "Coding" },
-  { pattern: /.pdf/, mapto: "Papers" },
+  { pattern: /\.pdf/, mapto: "Papers" },
   // { pattern: /Preview/, mapto: "Learning" },
   // { pattern: /Mendeley/, mapto: "Papers" },
   { pattern: /Zoom/, mapto: "Meetings" },
@@ -43,19 +43,18 @@ var title_mappings = [
   { pattern: /localhost/, mapto: "Time Wasting" }, // meta
   { pattern: /Minibuf/, mapto: "Time Wasting" },
 
-  { pattern: /pytorch/, mapto: "Coding" },
-  { pattern: /python/, mapto: "Coding" },
-  { pattern: /.py/, mapto: "Coding" },
-  { pattern: /.el/, mapto: "Coding" },
-  { pattern: /.js/, mapto: "Coding" },
-  { pattern: /.clj/, mapto: "Coding" },
+  // { pattern: /pytorch/, mapto: "Coding" },
+  // { pattern: /python/, mapto: "Coding" },
+  { pattern: /\.py/, mapto: "Coding" },
+  { pattern: /\.el/, mapto: "Coding" },
+  { pattern: /\.js/, mapto: "Coding" },
+  { pattern: /\.clj/, mapto: "Coding" },
 
-  { pattern: /stackoverflow/, mapto: "Learning" },
+  { pattern: /(stack|overflow)/i, mapto: "Learning" },
 
   { pattern: /lesswrong/, mapto: "Learning" },
   // { pattern: /mlscaling/, mapto: "Learning" },
   { pattern: /matter/, mapto: "Learning" },
-  { pattern: /Anki/, mapto: "Anki" },
   { pattern: /math/, mapto: "Learning" },
   { pattern: /Logseq/, mapto: "Learning" },
   // { pattern: /agi/, mapto: "Learning" },
