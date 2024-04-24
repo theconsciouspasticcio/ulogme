@@ -12,25 +12,54 @@ RENDER_ROOT = os.path.join(ROOT, "render", "event_jsons")
 logging.basicConfig(format="%(asctime)s %(message)s", level=logging.INFO)
 
 
-def load_events(fname):
-    """
-    Reads a file that consists of first column of unix timestamps
-    followed by arbitrary string, one per line. Outputs as dictionary.
-    Also keeps track of min and max time seen in global mint,maxt
-    """
+# def load_events(fname):
+#     """
+#     Reads a file that consists of first column of unix timestamps
+#     followed by arbitrary string, one per line. Outputs as dictionary.
+#     Also keeps track of min and max time seen in global mint,maxt
+#     """
 
+#     events = []
+#     with open(fname, "r") as fh:
+#         for w in fh:
+#             w = w.strip()
+#             line = w.split(" ", maxsplit=1)
+#             if len(line) == 1:
+#                 # an error has occured an nothing has been logged
+#                 timestamp = line[0]
+#                 label = "unk"
+#             else:
+#                 timestamp, label = line
+#             events.append({"t": int(timestamp), "s": label})
+#     return events
+
+
+def clean_timestamp(timestamp):
+    # Remove null bytes and any other non-numeric characters
+    return "".join(filter(str.isdigit, timestamp))
+
+
+def load_events(fname):
     events = []
     with open(fname, "r") as fh:
-        for w in fh:
-            w = w.strip()
-            line = w.split(" ", maxsplit=1)
-            if len(line) == 1:
-                # an error has occured an nothing has been logged
-                timestamp = line[0]
+        for line in fh:
+            line = line.strip()
+            parts = line.split(" ", maxsplit=1)
+            if len(parts) == 1:
+                # Handle the case where no label is provided
+                timestamp = parts[0]
                 label = "unk"
             else:
-                timestamp, label = line
-            events.append({"t": int(timestamp), "s": label})
+                timestamp, label = parts
+
+            # Clean the timestamp before conversion
+            clean_ts = clean_timestamp(timestamp)
+            try:
+                events.append({"t": int(clean_ts), "s": label})
+            except ValueError:
+                logging.error(f"Failed to convert timestamp: {timestamp}")
+                # Log or handle cases where timestamp remains invalid
+                continue
     return events
 
 
