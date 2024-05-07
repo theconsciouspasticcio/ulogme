@@ -44,6 +44,7 @@ var title_mappings = [
   { pattern: /ulogme/, mapto: "Time Wasting" }, // meta
   { pattern: /localhost/, mapto: "Time Wasting" }, // meta
   { pattern: /Minibuf/, mapto: "Time Wasting" },
+  { pattern: /Unboxing/i, mapto: "Time Wasting" },
 
   // { pattern: /pytorch/, mapto: "Coding" },
   // { pattern: /python/, mapto: "Coding" },
