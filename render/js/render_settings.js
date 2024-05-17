@@ -27,7 +27,7 @@ var title_mappings = [
   { pattern: /loginwindow/, mapto: "Locked Screen" },
 
   { pattern: /.org/, mapto: "Org" },
-  { pattern: /.tex/, mapto: "Latex" },
+  { pattern: /\.tex/, mapto: "Latex" },
 
   // { pattern: /localhost/, mapto: "Other Work" },
   { pattern: /blog/, mapto: "Learning" },
@@ -95,9 +95,10 @@ function mapwin(w) {
 // These groups will be rendered together in the "barcode view". For example, I like
 // to group my work stuff and play stuff together.
 var display_groups = [];
-// Non work related
+
+// TODO: differentiate shallow and intense learning/focus
 display_groups.push(["Meetings"]); // work related
-display_groups.push(["Learning", "Papers", "Coding", "Org"]); // Personal development
+display_groups.push(["Learning", "Papers", "Coding", "Org", "Latex"]); // Personal development
 display_groups.push(["Google Chrome", "MISC", "Time Wasting"]); // internet related
 // display_groups.push(["TeXworks"]); // paper writing related
 display_groups.push(["Locked Screen"]); // computer not being used
