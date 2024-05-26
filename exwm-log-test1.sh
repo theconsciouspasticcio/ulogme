@@ -25,10 +25,10 @@ get_log_filename() {
 # Function to determine if the screen is locked
 is_screen_locked() {
     if [[ $GDMSESSION == 'xfce' ]]; then
-        local screensaverstate=$(xscreensaver-command -time | cut -f2 -d: | cut -f2-3 -d' ')
+        screensaverstate=$(xscreensaver-command -time | cut -f2 -d: | cut -f2-3 -d' ')
         [[ $screensaverstate =~ "screen non-blanked" ]] && echo false || echo true
     elif [[ $GDMSESSION == 'ubuntu' || $GDMSESSION == 'ubuntu-2d' || $GDMSESSION == 'gnome-shell' || $GDMSESSION == 'gnome-classic' || $GDMSESSION == 'gnome-fallback' || $GDMSESSION == 'cinnamon' ]]; then
-        local screensaverstate=$(gnome-screensaver-command -q >/dev/null 2>&1)
+        screensaverstate=$(gnome-screensaver-command -q >/dev/null 2>&1)
         [[ $screensaverstate =~ .*inactive.* ]] && echo false || echo true
     elif [[ $XDG_SESSION_DESKTOP == 'KDE' ]]; then
         qdbus org.kde.screensaver /ScreenSaver org.freedesktop.ScreenSaver.GetActive
@@ -39,10 +39,10 @@ is_screen_locked() {
 
 # Function to get the current window title
 get_current_window_title() {
-    local id=$(xdotool getactivewindow 2>/dev/null)
+    id=$(xdotool getactivewindow 2>/dev/null)
     if [ -n "$id" ]; then
         wmctrl -lpG | while read -a a; do
-            local w=${a[0]}
+            w=${a[0]}
             if [[ $((16#${w:2})) -eq $id ]]; then
                 echo "${a[@]:8}"
                 break
@@ -55,9 +55,9 @@ get_current_window_title() {
 
 # Function to handle log writing
 write_log() {
-    local curtitle="$1"
-    local T="$(date +%s)"
-    local logfile="$log_dir/window_$(get_log_filename).txt"
+    curtitle="$1"
+    T="$(date +%s)"
+    logfile="$log_dir/window_$(get_log_filename).txt"
     echo "$T $curtitle" >> "$logfile"
     echo "Logged window title: $(date) $curtitle into $logfile"
     last_write=$T
@@ -77,7 +77,7 @@ while true; do
         curtitle=$(get_current_window_title)
     fi
 
-    local T="$(date +%s)"
+    T="$(date +%s)"
     if [[ "$lasttitle" != "$curtitle" ]] || (( T - last_write >= maxtime )); then
         write_log "$curtitle"
     fi
