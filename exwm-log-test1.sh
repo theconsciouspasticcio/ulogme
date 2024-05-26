@@ -49,7 +49,16 @@ get_current_window_title() {
             fi
         done
     else
-        emacsclient -e '(if (eq (window-dedicated-p (selected-window)) nil) (buffer-name (window-buffer (selected-window))) "Dedicated")' | sed s/\"//g
+        emacsclient -e '
+        (let ((win (selected-window))
+              (name (buffer-name (window-buffer (selected-window))))
+              (mode (with-current-buffer (window-buffer (selected-window)) major-mode)))
+          (cond
+           ((eq mode "vterm-mode") "VTERM")
+           ((eq mode "eshell-mode") "ESHELL")
+           ((eq mode "term-mode") "TERM")
+           ((string-match-p "^\\*.*\\*$" name) (concat "POPUP-" name))
+           (t name)))' | sed s/\"//g
     fi
 }
 
