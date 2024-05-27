@@ -16,6 +16,7 @@ mkdir -p "$log_dir"
 
 last_write="0"
 lasttitle=""
+last_uptime="0"
 
 # Function to get the current log file name based on 7am timestamp
 get_log_filename() {
@@ -62,6 +63,11 @@ get_current_window_title() {
     fi
 }
 
+# Function to get system uptime in seconds
+get_uptime() {
+    cat /proc/uptime | awk '{print int($1)}'
+}
+
 # Function to handle log writing
 write_log() {
     curtitle="$1"
@@ -71,6 +77,7 @@ write_log() {
     echo "Logged window title: $(date) $curtitle into $logfile"
     last_write=$T
     lasttitle="$curtitle"
+    last_uptime=$(get_uptime)
 }
 
 # Trap signals for a graceful exit
@@ -86,8 +93,13 @@ while true; do
         curtitle=$(get_current_window_title)
     fi
 
+    current_uptime=$(get_uptime)
     T="$(date +%s)"
-    if [[ "$lasttitle" != "$curtitle" ]] || (( T - last_write >= maxtime )); then
+
+    if (( current_uptime < last_uptime )) || (( current_uptime - last_uptime > maxtime )); then
+        # Log AFK if system was restarted or if the time interval is unexpectedly large
+        write_log "AFK"
+    elif [[ "$lasttitle" != "$curtitle" ]] || (( T - last_write >= maxtime )); then
         write_log "$curtitle"
     fi
 

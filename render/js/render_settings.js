@@ -26,7 +26,8 @@ var title_mappings = [
   { pattern: /ScreenSaverEngine/, mapto: "Locked Screen" },
   { pattern: /loginwindow/, mapto: "Locked Screen" },
 
-  { pattern: /.org/, mapto: "Org" },
+  { pattern: /\.org/, mapto: "Org" },
+  { pattern: /Org/, mapto: "Org" },
   { pattern: /\.tex/, mapto: "Latex" },
 
   // { pattern: /localhost/, mapto: "Other Work" },
