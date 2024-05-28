@@ -10,7 +10,9 @@ var title_mappings = [
   { pattern: /Firefox/, mapto: "Google Chrome" }, // lol
   { pattern: /YouTube/, mapto: "Learning" },
   // { pattern: /TDA/, mapto: "Learning" }, // lol
-  { pattern: /vterm/, mapto: "Time Wasting" },
+  { pattern: /dedicated/i, mapto: "AFK" },
+  { pattern: /doom/i, mapto: "AFK" },
+  { pattern: /vterm/, mapto: "Coding" },
   { pattern: /Colab/, mapto: "Coding" },
   { pattern: /Jupyter/, mapto: "Coding" },
   // { pattern: /colab.research.google/, mapto: "Coding" },
@@ -100,7 +102,7 @@ var display_groups = [];
 // TODO: differentiate shallow and intense learning/focus
 display_groups.push(["Meetings"]); // work related
 display_groups.push(["Learning", "Papers", "Coding", "Org", "Latex"]); // Personal development
-display_groups.push(["Google Chrome", "MISC", "Time Wasting"]); // internet related
+display_groups.push(["Google Chrome", "MISC", "Time Wasting", "AFK"]); // internet related
 // display_groups.push(["TeXworks"]); // paper writing related
 display_groups.push(["Locked Screen"]); // computer not being used
 // list of titles that classify as "hacking", or being productive in general
