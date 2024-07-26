@@ -1,1 +1,8 @@
-Keylogger started...
+[2024-07-26 15:06:00] his is a test file, I want to se if it will record also mistakes miiiista
+
+[2024-07-26 15:06:07] what now?
+
+[2024-07-26 15:06:19] 
+
+[2024-07-26 15:06:44] ah ok it f I dont press newline I wiit will not record this?
+

@@ -3,20 +3,27 @@ from pynput import keyboard
 import subprocess
 
 # Constants
-TIME_FRAME = 10  # seconds
+TIME_FRAME = 50  # seconds
 
 # Variables to track the state
 buffer = []
 last_timestamp = time.time()
 insert_mode = False
 cursor_position = 0
+ignore_next_key = False  # Variable to ignore the next key press
 
 
 def is_insert_mode():
     """Function to check if EXWM is in insert mode"""
     try:
         result = subprocess.run(
-            ["emacsclient", "-e", "(if (eq evil-state 'insert) 't 'nil)"], capture_output=True, text=True
+            [
+                "emacsclient",
+                "-e",
+                "(with-current-buffer (window-buffer (selected-window)) (if (eq evil-state 'insert) 't 'nil))",
+            ],
+            capture_output=True,
+            text=True,
         )
         insert_mode = "t" in result.stdout
         print(f"Insert mode: {insert_mode}")  # Debug statement
@@ -27,12 +34,26 @@ def is_insert_mode():
 
 
 def on_press(key):
-    global buffer, last_timestamp, cursor_position, insert_mode
+    global buffer, last_timestamp, cursor_position, insert_mode, ignore_next_key
 
-    # Update insert mode status
-    insert_mode = is_insert_mode()
+    # Check if insert mode is active
+    current_insert_mode = is_insert_mode()
+
+    if current_insert_mode != insert_mode:
+        insert_mode = current_insert_mode
+        ignore_next_key = insert_mode  # Ignore the next key if we just entered insert mode
+        if insert_mode:
+            print("Switched to insert mode")  # Debug statement
+        else:
+            print("Switched out of insert mode")  # Debug statement
+        return
 
     if not insert_mode:
+        return
+
+    if ignore_next_key:
+        print(f"Ignored key: {key}")  # Debug statement
+        ignore_next_key = False
         return
 
     try:
@@ -60,22 +81,22 @@ def on_press(key):
         # Handle timestamps and buffer flushing
         current_time = time.time()
         if current_time - last_timestamp >= TIME_FRAME or key_str == "\n":
-            flush_buffer()
+            flush_buffer(current_time)
             last_timestamp = current_time
 
     except Exception as e:
         print(f"Error in on_press: {e}")
 
 
-def flush_buffer():
+def flush_buffer(current_time):
     global buffer
     if buffer:
         log_entry = "".join(buffer)
-        timestamp = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(last_timestamp))
+        timestamp = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(current_time))
         with open("keylog.txt", "a") as f:
             f.write(f"[{timestamp}] {log_entry}\n")
         print(f"Flushed buffer: [{timestamp}] {log_entry}")  # Debug statement
-        buffer = []
+        buffer.clear()
 
 
 def on_release(key):
