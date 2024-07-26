@@ -1,58 +1,22 @@
 Debug log started...
-[2024-07-26 10:16:26] Checking Emacs insert mode...
-[2024-07-26 10:16:26] Emacs insert mode: False
-[2024-07-26 10:16:30] Checking Emacs insert mode...
-[2024-07-26 10:16:30] Emacs insert mode: False
-[2024-07-26 10:16:33] Insert mode enabled
-[2024-07-26 10:16:33] Key pressed: 's'
-[2024-07-26 10:16:33] Logged text: s
-[2024-07-26 10:16:33] Key pressed: Key.space
-[2024-07-26 10:16:33] Key pressed: 't'
-[2024-07-26 10:16:34] Key pressed: 'h'
-[2024-07-26 10:16:34] Key pressed: 'i'
-[2024-07-26 10:16:34] Key pressed: 's'
-[2024-07-26 10:16:34] Key pressed: Key.space
-[2024-07-26 10:16:34] Checking Emacs insert mode...
-[2024-07-26 10:16:34] Emacs insert mode: False
-[2024-07-26 10:16:36] Insert mode enabled
-[2024-07-26 10:16:36] Key pressed: 'n'
-[2024-07-26 10:16:36] Key pressed: 'g'
-[2024-07-26 10:16:36] Key pressed: Key.space
-[2024-07-26 10:16:36] Key pressed: 'p'
-[2024-07-26 10:16:37] Key pressed: 'r'
-[2024-07-26 10:16:37] Logged text: s this ng pr
-[2024-07-26 10:16:38] Key pressed: 'o'
-[2024-07-26 10:16:38] Checking Emacs insert mode...
-[2024-07-26 10:16:38] Emacs insert mode: False
-[2024-07-26 10:16:42] Checking Emacs insert mode...
-[2024-07-26 10:16:42] Emacs insert mode: False
-[2024-07-26 10:16:46] Checking Emacs insert mode...
-[2024-07-26 10:16:46] Emacs insert mode: False
-[2024-07-26 10:16:50] Checking Emacs insert mode...
-[2024-07-26 10:16:50] Emacs insert mode: False
-[2024-07-26 10:16:52] Insert mode enabled
-[2024-07-26 10:16:53] Key pressed: 'n'
-[2024-07-26 10:16:53] Logged text: s this ng pron
-[2024-07-26 10:16:53] Key pressed: Key.space
-[2024-07-26 10:16:53] Key pressed: 'i'
-[2024-07-26 10:16:54] Key pressed: 's'
-[2024-07-26 10:16:54] Key pressed: Key.space
-[2024-07-26 10:16:54] Key pressed: 't'
-[2024-07-26 10:16:54] Checking Emacs insert mode...
-[2024-07-26 10:16:54] Key pressed: 'h'
-[2024-07-26 10:16:54] Emacs insert mode: False
-[2024-07-26 10:16:54] Insert mode enabled
-[2024-07-26 10:16:54] Key pressed: 's'
-[2024-07-26 10:16:55] Key pressed: Key.shift
-[2024-07-26 10:16:56] Key pressed: '?'
-[2024-07-26 10:16:57] Key pressed: Key.esc
-[2024-07-26 10:16:57] Logged text: s this ng pron is ths?
-[2024-07-26 10:16:58] Key pressed: '0'
-[2024-07-26 10:16:58] Checking Emacs insert mode...
-[2024-07-26 10:16:58] Emacs insert mode: False
-[2024-07-26 10:17:02] Insert mode enabled
-[2024-07-26 10:17:02] Checking Emacs insert mode...
-[2024-07-26 10:17:02] Emacs insert mode: False
-[2024-07-26 10:17:06] Checking Emacs insert mode...
-[2024-07-26 10:17:06] Emacs insert mode: False
-[2024-07-26 10:17:10] Exiting...
+[2024-07-26 10:23:51] Checking Emacs insert mode...
+[2024-07-26 10:23:51] Emacs insert mode: False
+[2024-07-26 10:23:52] Checking Emacs insert mode...
+[2024-07-26 10:23:52] Emacs insert mode: False
+[2024-07-26 10:23:53] Checking Emacs insert mode...
+[2024-07-26 10:23:53] Emacs insert mode: False
+[2024-07-26 10:23:54] Checking Emacs insert mode...
+[2024-07-26 10:23:54] Emacs insert mode: False
+[2024-07-26 10:23:55] Checking Emacs insert mode...
+[2024-07-26 10:23:55] Emacs insert mode: False
+[2024-07-26 10:23:56] Checking Emacs insert mode...
+[2024-07-26 10:23:56] Emacs insert mode: False
+[2024-07-26 10:23:57] Checking Emacs insert mode...
+[2024-07-26 10:23:57] Emacs insert mode: False
+[2024-07-26 10:23:58] Checking Emacs insert mode...
+[2024-07-26 10:23:58] Emacs insert mode: False
+[2024-07-26 10:23:59] Checking Emacs insert mode...
+[2024-07-26 10:23:59] Emacs insert mode: False
+[2024-07-26 10:24:00] Checking Emacs insert mode...
+[2024-07-26 10:24:00] Emacs insert mode: False
+[2024-07-26 10:24:01] Exiting...
