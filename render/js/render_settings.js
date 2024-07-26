@@ -11,8 +11,9 @@ var title_mappings = [
   { pattern: /YouTube/, mapto: "Learning" },
   // { pattern: /TDA/, mapto: "Learning" }, // lol
   { pattern: /dedicated/i, mapto: "AFK" },
-  { pattern: /doom/i, mapto: "AFK" },
   { pattern: /vterm/, mapto: "Coding" },
+
+  { pattern: /doom/i, mapto: "AFK" },
   { pattern: /Colab/, mapto: "Coding" },
   { pattern: /Jupyter/, mapto: "Coding" },
   // { pattern: /colab.research.google/, mapto: "Coding" },
