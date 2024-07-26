@@ -1,18 +1,21 @@
 import time
 from pynput import keyboard
 import subprocess
+import signal
+import sys
 
 # Log file path
-LOGFILE = "keylog.txt"
+LOGFILE = "./keylog.txt"
 
 # Time gap threshold in seconds to insert a timestamp
-TIME_GAP_THRESHOLD = 2
+TIME_GAP_THRESHOLD = 4
 
 # State variables
 current_text = ""
 last_log_time = time.time()
 emacs_active = False
 insert_mode = False
+listener = None
 
 
 # Function to log text to file
@@ -21,20 +24,21 @@ def log_text(text):
         file.write(text)
 
 
-# Function to get the current active window title
-def get_active_window_title():
+# Function to check if Emacs is in insert mode and EXWM buffer is active
+def check_emacs_state():
     try:
-        result = subprocess.run(["xdotool", "getactivewindow", "getwindowname"], capture_output=True, text=True)
-        return result.stdout.strip()
+        # This lisp expression checks if the current buffer is an EXWM buffer
+        # and if it is in insert mode.
+        lisp_expr = """
+        (let ((buf (current-buffer)))
+          (and (derived-mode-p 'exwm-mode)
+               (bound-and-true-p exwm-input-line-mode-p)))
+        """
+        result = subprocess.run(["emacsclient", "-e", lisp_expr], capture_output=True, text=True)
+        return result.stdout.strip() == "t"
     except Exception as e:
-        print(f"Error getting active window title: {e}")
-        return ""
-
-
-# Function to check if Emacs is active
-def is_emacs_active():
-    title = get_active_window_title()
-    return "emacs" in title.lower()
+        print(f"Error checking Emacs state: {e}")
+        return False
 
 
 # Keyboard event handlers
@@ -42,10 +46,10 @@ def on_press(key):
     global current_text, last_log_time, emacs_active, insert_mode
 
     try:
-        emacs_active = is_emacs_active()
+        emacs_active = check_emacs_state()
 
         # Ignore key presses if Emacs is not active or not in insert mode
-        if not emacs_active or not insert_mode:
+        if not emacs_active:
             return
 
         # Handle special keys
@@ -55,8 +59,6 @@ def on_press(key):
             current_text += "\n"
         elif key == keyboard.Key.backspace:
             current_text = current_text[:-1]
-        elif key == keyboard.Key.esc:
-            insert_mode = False
         elif hasattr(key, "char") and key.char:
             current_text += key.char
 
@@ -79,15 +81,35 @@ def on_release(key):
         insert_mode = True
 
 
+# Signal handler for clean exit
+def signal_handler(sig, frame):
+    global listener
+    print("Exiting...")
+    if listener:
+        listener.stop()
+    sys.exit(0)
+
+
 # Main function to start the keylogger
 def main():
+    global listener
     # Clear log file at the start
     with open(LOGFILE, "w") as file:
         file.write("Keylogger started...\n")
 
+    # Set up the signal handler
+    signal.signal(signal.SIGINT, signal_handler)
+
     # Start listening to keyboard events
-    with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
-        listener.join()
+    listener = keyboard.Listener(on_press=on_press, on_release=on_release)
+    listener.start()
+
+    # Keep the main thread alive to keep logging
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        pass
 
 
 if __name__ == "__main__":
