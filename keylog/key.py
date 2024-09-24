@@ -3,7 +3,7 @@ from pynput import keyboard
 import subprocess
 
 # Constants
-TIME_FRAME = 50  # seconds
+TIME_FRAME = 10  # seconds
 
 # Variables to track the state
 buffer = []
@@ -67,6 +67,24 @@ def on_press(key):
                 cursor_position -= 1
                 buffer.pop(cursor_position)
             print(f"Key pressed: BACKSPACE")  # Debug statement
+            return
+        elif key == keyboard.Key.left:
+            if cursor_position > 0:
+                cursor_position -= 1
+            print(f"Key pressed: LEFT ARROW")  # Debug statement
+            return
+        elif key == keyboard.Key.right:
+            if cursor_position < len(buffer):
+                cursor_position += 1
+            print(f"Key pressed: RIGHT ARROW")  # Debug statement
+            return
+        elif key == keyboard.Key.home:
+            cursor_position = 0
+            print(f"Key pressed: HOME")  # Debug statement
+            return
+        elif key == keyboard.Key.end:
+            cursor_position = len(buffer)
+            print(f"Key pressed: END")  # Debug statement
             return
         elif hasattr(key, "char") and key.char is not None:
             key_str = key.char
