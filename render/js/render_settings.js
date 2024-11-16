@@ -6,53 +6,53 @@
 // may get mapped to just "Google Chrome".
 // these get applied in order they are specified, from top to bottom
 var title_mappings = [
-  { pattern: /Google Chrome/, mapto: "Google Chrome" },
   { pattern: /Firefox/, mapto: "Google Chrome" }, // lol
-  { pattern: /Inotebook/, mapto: "Coding" },
+  { pattern: /jupyter/, mapto: "Coding" },
   { pattern: /\/lab/, mapto: "Coding" },
   { pattern: /colab.research.google/, mapto: "Coding" },
   { pattern: /.pdf/, mapto: "Papers" },
   { pattern: /Preview/, mapto: "Learning" },
-  { pattern: /Mendeley/, mapto: "Papers" },
-  { pattern: /Teams/, mapto: "Meetings" },
-  { pattern: /edwardr@/, mapto: "Coding" },
-  { pattern: /iTerm2/, mapto: "Coding" },
-  { pattern: /Code/, mapto: "Coding" },
+  { pattern: /pubmed/, mapto: "Papers" },
+  // { pattern: /Teams/, mapto: "Meetings" },
+  // { pattern: /edwardr@/, mapto: "Coding" },
+  // { pattern: /iTerm2/, mapto: "Coding" },
+  // { pattern: /Code/, mapto: "Coding" },
   { pattern: /__LOCKEDSCREEN/, mapto: "Locked Screen" }, // __LOCKEDSCREEN is a special token
   { pattern: /ScreenSaverEngine/, mapto: "Locked Screen" },
   { pattern: /loginwindow/, mapto: "Locked Screen" },
 
-  { pattern: /TeXworks/, mapto: "Latex" },
+  { pattern: /latex/, mapto: "Latex" },
   { pattern: /localhost/, mapto: "Other Work" },
-  { pattern: /aml./, mapto: "Other Work" },
-  { pattern: /Speechmatics/, mapto: "Other Work" },
+  // { pattern: /aml./, mapto: "Other Work" },
+  // { pattern: /Speechmatics/, mapto: "Other Work" },
   { pattern: /blog/, mapto: "Learning" },
-  { pattern: /TickTick/, mapto: "Admin" },
+  // { pattern: /TickTick/, mapto: "Admin" },
   { pattern: /Outlook/, mapto: "Admin" },
 
-  { pattern: /jamboard/, mapto: "Other Work" },
-  { pattern: /atlassian/, mapto: "Other Work" },
-  { pattern: /scalars/, mapto: "Other Work" },
+  // { pattern: /jamboard/, mapto: "Other Work" },
+  // { pattern: /atlassian/, mapto: "Other Work" },
+  // { pattern: /scalars/, mapto: "Other Work" },
   { pattern: /git/, mapto: "Other Work" },
 
   { pattern: /youtube/, mapto: "Time Wasting" },
-  { pattern: /ebay/, mapto: "Time Wasting" },
-  { pattern: /Spotify/, mapto: "Time Wasting" },
+  // { pattern: /ebay/, mapto: "Time Wasting" },
+  // { pattern: /Spotify/, mapto: "Time Wasting" },
   { pattern: /localhost:8124/, mapto: "Time Wasting" }, // meta
 
-  { pattern: /pytorch/, mapto: "Coding" },
+  // { pattern: /pytorch/, mapto: "Coding" },
   { pattern: /python/, mapto: "Coding" },
   { pattern: /stackoverflow/, mapto: "Coding" },
 
-  { pattern: /lesswrong/, mapto: "Learning" },
-  { pattern: /mlscaling/, mapto: "Learning" },
-  { pattern: /matter/, mapto: "Learning" },
-  { pattern: /Anki/, mapto: "Anki" },
-  { pattern: /Obsidian/, mapto: "Learning" },
-  { pattern: /agi/, mapto: "Learning" },
-  { pattern: /align/, mapto: "Learning" },
-  { pattern: /RobertMiles/, mapto: "Learning" },
-  { pattern: /lilianweng/, mapto: "Learning" },
+  { pattern: //, mapto: "Learning" },
+  { pattern: /neuro/, mapto: "Learning" },
+  { pattern: /pers/, mapto: "Learning" },
+  { pattern: /homology/, mapto: "Learning" },
+  { pattern: /fmri/, mapto: "Learning" },
+  { pattern: /topolog/, mapto: "Learning" },
+  { pattern: /tda/, mapto: "Learning" },
+  { pattern: /arxiv/, mapto: "Papers" },
+  { pattern: /.org/, mapto: "Org" },
+  { pattern: /gpt/, mapto: "gpt" },
   { pattern: /karpathy/, mapto: "Learning" },
 ];
 
@@ -82,8 +82,9 @@ function mapwin(w) {
 // to group my work stuff and play stuff together.
 var display_groups = [];
 // Non work related
-display_groups.push(["Coding", "Papers", "Other Work", "Admin", "Meetings"]); // work related
-display_groups.push(["Learning", "Anki"]); // Personal development
+  display_groups.push(["Coding", "Papers", "Other Work", "Admin", "Meetings",
+                       "Org", "gpt"]); // work related
+display_groups.push(["Learning"]); // Personal development
 display_groups.push(["Google Chrome", "MISC"]); // internet related
 // display_groups.push(["TeXworks"]); // paper writing related
 display_groups.push(["Locked Screen"]); // computer not being used
